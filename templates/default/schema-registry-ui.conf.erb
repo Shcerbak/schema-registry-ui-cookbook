@@ -1,0 +1,12 @@
+server {
+  listen 8083;
+
+  location / {
+    try_files $uri $uri/ /index.html =404;
+    root /<%= node['schema-registry-ui']['path'] %>/schema-registry-ui/;
+    <% if @use_auth_basic -%>
+    auth_basic "Private Property";
+    auth_basic_user_file <%= node['schema-registry-ui']['htpasswd']['path'] %>;
+    <% end -%>
+  }
+}
